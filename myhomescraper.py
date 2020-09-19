@@ -3,10 +3,11 @@ import requests, time
 prices=[]
 totals=[]
 page_nr=1
-while page_nr<10:
+while page_nr<=100:
     #comment out 1 of the two requests for either Data on Bstumi or Tbilsi
     #page = requests.get("https://www.myhome.ge/en/s/Apartment-for-sale-House-for-Sale-Batumi?Keyword=Batumi&AdTypeID=1&PrTypeID=1.2&Page="+str(page_nr)+"&GID=8742159")
-    page = requests.get("https://www.myhome.ge/en/s/Apartment-for-sale-House-for-Sale-Tbilisi?Keyword=Tbilisi&AdTypeID=1&PrTypeID=1.2&Page="+str(page_nr)+"&GID=1996871")
+    #page = requests.get("https://www.myhome.ge/en/s/Apartment-for-sale-House-for-Sale-Tbilisi?Keyword=Tbilisi&AdTypeID=1&PrTypeID=1.2&Page="+str(page_nr)+"&GID=1996871")
+    page = requests.get("https://www.myhome.ge/en/s/Apartment-for-sale-Tbilisi?Keyword=Tbilisi&AdTypeID=1&PrTypeID=1&Page="+str(page_nr)+"&GID=1996871") # nur wohnungen
     tree = html.fromstring(page.content)
     prices_current_site = tree.xpath('//span[@class="sq-price-gel d-none ml-5px"]/text()')
     print('Page '+str(page_nr)+': Squaremeter prices: ')
@@ -29,3 +30,8 @@ average_size = average_total/average_price
 print('average price: '+ str(average_price))
 print('average apartment price: '+str(average_total))
 print('average apartment size: '+ str(average_size))
+path='myhome/historicalnotes.txt'
+results = ', '.join([str(page_nr - 1),str(average_price),str(average_total),str(average_size)])
+hntxt=open(path,'r+')
+hntxt.write(results)
+hntxt.close()
