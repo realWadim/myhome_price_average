@@ -1,6 +1,8 @@
 from lxml import html
 import requests, time, datetime
 date = datetime.datetime.today()
+index_path='index.txt'
+index=open(index_path,'r+')
 prices=[]
 totals=[]
 sizes=[]
